@@ -44,9 +44,10 @@ pipeline {
                 script {
                     // Apply Kubernetes manifests
                     bat """
+                       cd ..
                        git config --global user.email "anas.ash099@example.com"
                        git config --global user.name "Anas Ashraf"
-                       git pull
+                       git clone ${MANIFEST_REPO}
                        cd ${MANIFEST_REPO_NAME}
                        powershell -Command "(Get-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml') -replace '${IMAGE_TAG}:.*', '${IMAGE_TAG}:${IMAGE_VERSION}' | Set-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml'"
                        git add .
