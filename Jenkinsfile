@@ -1,6 +1,8 @@
-parameters {
-    booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Should build docker image and deploy it?')
-}
+properties([
+        parameters([
+                booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Should build docker image and deploy it?')
+        ])
+])
 
 pipeline {
     agent any
@@ -23,24 +25,24 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    bat "docker build -t ${IMAGE_TAG}:${IMAGE_VERSION} ."
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) { // login into Docker Hub
-                        echo 'Pushing docker image...'
-                        bat "docker push ${IMAGE_TAG}:${IMAGE_VERSION}"
-                    }
-                }
-            }
-        }
+//        stage('Build Docker Image') {
+//            steps {
+//                script {
+//                    bat "docker build -t ${IMAGE_TAG}:${IMAGE_VERSION} ."
+//                }
+//            }
+//        }
+//
+//        stage('Push Docker Image') {
+//            steps {
+//                script {
+//                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) { // login into Docker Hub
+//                        echo 'Pushing docker image...'
+//                        bat "docker push ${IMAGE_TAG}:${IMAGE_VERSION}"
+//                    }
+//                }
+//            }
+//        }
 
 //        stage('Update Kubernetes Manifest') {
 //            steps {
