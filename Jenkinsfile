@@ -1,3 +1,7 @@
+parameters {
+    booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Should build docker image and deploy it?')
+}
+
 pipeline {
     agent any
     environment {
@@ -42,12 +46,13 @@ pipeline {
             steps {
                 echo 'Updating manifest ...'
                 script {
-                    // Apply Kubernetes manifests
+//                     Apply Kubernetes manifests
                     bat """
                        cd ..
-                       git config --global user.email "anas.ash099@example.com"
-                       git config --global user.name "Anas Ashraf"
-                       git clone ${MANIFEST_REPO}
+                       git config user.email "anas.ash099@example.com"
+                       git config user.name "Anas Ashraf"
+//                       git clone ${MANIFEST_REPO}
+                       git pull
                        cd ${MANIFEST_REPO_NAME}
                        powershell -Command "(Get-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml') -replace '${IMAGE_TAG}:.*', '${IMAGE_TAG}:${IMAGE_VERSION}' | Set-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml'"
                        git add .
