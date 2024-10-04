@@ -42,26 +42,26 @@ pipeline {
             }
         }
 
-        stage('Update Kubernetes Manifest') {
-            steps {
-                echo 'Updating manifest ...'
-                script {
-//                     Apply Kubernetes manifests
-                    bat """
-                       cd ..
-                       git config user.email "anas.ash099@example.com"
-                       git config user.name "Anas Ashraf"
-//                       git clone ${MANIFEST_REPO}
-                       git pull
-                       cd ${MANIFEST_REPO_NAME}
-                       powershell -Command "(Get-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml') -replace '${IMAGE_TAG}:.*', '${IMAGE_TAG}:${IMAGE_VERSION}' | Set-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml'"
-                       git add .
-                       git commit -m "update tag image by Jenkins to version ${IMAGE_VERSION}"
-                       git push https://${GIT_CREDENTIALS_USR}:${GIT_CREDENTIALS_PSW}@github.com/${GIT_CREDENTIALS_USR}/${MANIFEST_REPO_NAME}.git
-                    """
-                }
-            }
-        }
+//        stage('Update Kubernetes Manifest') {
+//            steps {
+//                echo 'Updating manifest ...'
+//                script {
+////                     Apply Kubernetes manifests
+//                    bat """
+//                       cd ..
+//                       git config user.email "anas.ash099@example.com"
+//                       git config user.name "Anas Ashraf"
+////                       git clone ${MANIFEST_REPO}
+//                       git pull
+//                       cd ${MANIFEST_REPO_NAME}
+//                       powershell -Command "(Get-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml') -replace '${IMAGE_TAG}:.*', '${IMAGE_TAG}:${IMAGE_VERSION}' | Set-Content -Path '${DEPLOYMENT_FILE_PATH}\\deployment.yaml'"
+//                       git add .
+//                       git commit -m "update tag image by Jenkins to version ${IMAGE_VERSION}"
+//                       git push https://${GIT_CREDENTIALS_USR}:${GIT_CREDENTIALS_PSW}@github.com/${GIT_CREDENTIALS_USR}/${MANIFEST_REPO_NAME}.git
+//                    """
+//                }
+//            }
+//        }
     }
 
     post {
